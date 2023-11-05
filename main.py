@@ -1,4 +1,4 @@
-#не проходить тест 3, 4, 5
+#не проходить тест 3, 4, 5.
 
 from datetime import date, datetime, timedelta
 

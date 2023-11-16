@@ -56,7 +56,7 @@ class TestGetBirthdaysPerWeek(unittest.TestCase):
             {"name": "John", "birthday": (self.today - timedelta(days=10)).date()},
             {"name": "Doe", "birthday": (self.today - timedelta(days=20)).date()},
         ]
-        result = get_birthdays_per_week(users)
+        result = get_birthdays_per_week(users, self.today)
         expected = {}
         assert (
             result == expected
@@ -69,7 +69,7 @@ class TestGetBirthdaysPerWeek(unittest.TestCase):
         """
         date_mock.today.return_value = self.today.date()
         users = []
-        result = get_birthdays_per_week(users)
+        result = get_birthdays_per_week(users, self.today)
         expected = {}
         assert (
             result == expected
@@ -92,12 +92,11 @@ class TestGetBirthdaysPerWeek(unittest.TestCase):
             },
             {"name": "Alice", "birthday": (self.today + timedelta(days=3)).date()},
         ]
-        result = get_birthdays_per_week(users)
+        result = get_birthdays_per_week(users, self.today)
         expected = {"Monday": ["John", "Doe"], "Friday": ["Alice"]}
         assert (
             result == expected
         ), "5. Провалено тест коли дні народження деяких користувачів випадають на вихідні. Функція повернула не правильний словник"
-
     @patch("main.date")
     def test_past_birthdays_next_week(self, date_mock):
         """
@@ -118,7 +117,7 @@ class TestGetBirthdaysPerWeek(unittest.TestCase):
                 "birthday": (datetime(2021, 1, 1)).date(),
             },
         ]
-        result = get_birthdays_per_week(users)
+        result = get_birthdays_per_week(users,  self.today)
         expected = {
             "Monday": ["Alice"],
         }
@@ -144,7 +143,7 @@ class TestGetBirthdaysPerWeek(unittest.TestCase):
             },
             {"name": "Alice", "birthday": (self.today + timedelta(days=-3)).date()},
         ]
-        result = get_birthdays_per_week(users)
+        result = get_birthdays_per_week(users, self.today)
         expected = {"Wednesday": ["John"], "Friday": ["Doe"]}
         assert (
             result == expected
